@@ -1,5 +1,39 @@
 <div class="grid h-screen place-items-center">
-  <div class="font-bold text-3xl">
+  <div class="font-bold text-3xl text-center">
     Fyle Internship Challenge
   </div>
+  <div class="mt-1 flex justify-center items-center">
+    <input type="text" placeholder="Enter GitHub username" #usernameInput
+           class="border border-gray-300 rounded-l px-4 py-2 focus:outline-none" />
+    <button (click)="searchUser(usernameInput.value)"
+            class="bg-blue-500 hover:bg-blue-600 text-white rounded-r px-4 py-2">
+      Search
+    </button>
+  </div>
+  
+  <app-user-repos
+  *ngIf="searchedUser"
+  [username]="searchedUser"
+  [totalPages]="totalPages"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)"
+  class="mt-8 border border-gray-300 rounded px-4 py-2">
+  <h1>{{[username.bio]}</h1>
+</app-user-repos>
+
+  <button *ngFor="let page of getPageNumbers()"
+          (click)="onPageChange(page)"
+          [class.bg-blue-500]="currentPage !== page"
+          [class.hover:bg-blue-600]="currentPage !== page"
+          [class.text-white]="currentPage !== page"
+          [class.rounded]="true"
+          [class.px-3]="true"
+          [class.py-1]="true"
+          [class.mr-2]="true">
+    {{ page }}
+  </button>
+
+  <button (click)="clearSearch()" *ngIf="searchedUser" class="mt-4">
+    Clear Search
+  </button>
 </div>
