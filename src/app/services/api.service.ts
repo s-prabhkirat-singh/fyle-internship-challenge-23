@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,4 +20,10 @@ export class ApiService {
       params: { page: page.toString(), per_page: perPage.toString() }
     });
   }
+  countRepos(username: string): Observable<number> {
+    return this.httpClient.get<any[]>(`${this.baseUrl}/${username}`).pipe(
+      map((user: any) => user.public_repos) // Access the 'public_repos' property directly
+    );
+  }
+  
 }
