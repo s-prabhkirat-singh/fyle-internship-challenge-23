@@ -15,6 +15,7 @@ export class UserReposComponent implements OnInit {
   repos: any[] = [];
   noOfRepo=0;
   userData: any = {};
+  isLoading: boolean = true;
 
   constructor(private apiService: ApiService) {}
 
@@ -25,6 +26,9 @@ export class UserReposComponent implements OnInit {
       });
      
     }
+    setTimeout(() => {
+      this.isLoading = false; // Set isLoading to false after data is loaded
+    }, 2000);
     this.loadRepos();
   }
 

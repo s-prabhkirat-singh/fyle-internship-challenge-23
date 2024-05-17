@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from './services/api.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-root',
@@ -12,13 +14,20 @@ export class AppComponent {
   currentPage: number = 1;
   itemsPerPage: number = 10; // Default items per page
   totalPages: number = 0;
+  showError: boolean = false;
 
   constructor(private apiService: ApiService) {} searchUser(username: string) {
     if (username.trim() !== '') {
       this.apiService.getUser(username).subscribe((user: any) => {
+        this.showError = false;
+
         this.searchedUser = user.login;
         this.currentPage = 1; // Reset to page 1 when searching
         this.loadRepos();
+      },   (error: HttpErrorResponse) => {
+        console.error('An error occurred:', error.error);
+        // Set a flag or message for error handling
+        this.showError = true;
       });
     } else {
       this.clearSearch();

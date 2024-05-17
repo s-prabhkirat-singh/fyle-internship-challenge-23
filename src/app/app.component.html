@@ -12,6 +12,13 @@
   </div>
 
   <!-- User Repos with Pagination -->
+  
+  
+ 
+  <div *ngIf="showError">
+    <p class="text-red-500">Username Not Found.</p>
+  </div>
+  
   <app-user-repos
     *ngIf="searchedUser"
     [username]="searchedUser"
@@ -26,5 +33,5 @@
   
 
   <!-- Clear Search Button -->
-  <button *ngIf="searchedUser" (click)="clearSearch()" class="mt-4">Clear Search</button>
+  <button *ngIf="searchedUser" (click)="clearSearch()" class="bg-red-500 text-white px-4 py-2 rounded ml-2mt-4">Clear Search</button>
 </div>
