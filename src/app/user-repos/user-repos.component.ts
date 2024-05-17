@@ -14,10 +14,17 @@ export class UserReposComponent implements OnInit {
   @Output() pageChange = new EventEmitter<number>();
   repos: any[] = [];
   noOfRepo=0;
+  userData: any = {};
 
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
+    if (this.username) {
+      this.apiService.getUser(this.username).subscribe(userData => {
+        this.userData = userData;
+      });
+     
+    }
     this.loadRepos();
   }
 
@@ -30,7 +37,7 @@ export class UserReposComponent implements OnInit {
         this.repos = repos;
       });
       this.apiService.countRepos(this.username).subscribe(count => {
-        this.repos = [];
+        // this.repos = [];
         this.totalPages = Math.ceil(count/perPage );
       });
     }
@@ -43,6 +50,7 @@ export class UserReposComponent implements OnInit {
       this.loadRepos(); // Reload repositories for the new page
     }
   }
+  
 
   onItemsPerPageChange(): void {
     this.currentPage = 1; // Reset to page 1 when items per page changes

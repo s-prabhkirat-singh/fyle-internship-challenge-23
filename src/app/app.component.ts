@@ -13,9 +13,7 @@ export class AppComponent {
   itemsPerPage: number = 10; // Default items per page
   totalPages: number = 0;
 
-  constructor(private apiService: ApiService) {}
-
-  searchUser(username: string) {
+  constructor(private apiService: ApiService) {} searchUser(username: string) {
     if (username.trim() !== '') {
       this.apiService.getUser(username).subscribe((user: any) => {
         this.searchedUser = user.login;
@@ -36,8 +34,8 @@ export class AppComponent {
 
   loadRepos() {
     if (this.searchedUser) {
-      const perPage = this.itemsPerPage;
-      const page = this.currentPage;
+      const perPage = 10;
+      const page = 1;
 
       this.apiService.getUserRepos(this.searchedUser, page, perPage)
         .subscribe((repos: any[]) => {

@@ -16,7 +16,7 @@
     *ngIf="searchedUser"
     [username]="searchedUser"
     [totalPages]="totalPages"
-    [currentPage]="currentPage"
+    [currentPage]=1
     (pageChange)="onPageChange($event)"
     class="mt-8 border border-gray-300 rounded px-4 py-2">
   </app-user-repos>
