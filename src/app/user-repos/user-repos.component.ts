@@ -42,7 +42,11 @@ export class UserReposComponent implements OnInit {
       });
       this.apiService.countRepos(this.username).subscribe(count => {
         // this.repos = [];
-        this.totalPages = Math.ceil(count/perPage );
+        if(perPage<=100){
+        this.totalPages = Math.ceil(count/perPage );}
+        else{
+          this.totalPages = Math.ceil(count/100 );
+        }
       });
     }
   }

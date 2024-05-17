@@ -12,11 +12,14 @@
       <div>
         <h2 class="text-lg font-bold">{{ userData.login }}</h2>
         <p class="text-sm text-gray-500">{{ userData.bio }}</p>
+        <p class="text-sm text-gray-500">{{ userData.location }}</p>
         <p class="text-sm text-gray-500">Twitter: @{{ userData.twitter_username }}</p>
         <p class="text-sm font-bold text-gray-500">Public Repos: {{ userData.public_repos }}</p>
         <p class="text-sm text-gray-500">Url: {{ userData.url }}</p>
       </div>
     </div>
+    <div *ngIf="itemsPerPage>100"><h3 class="bg-red-500 mb-3 text-center text-white px-4 py-2 rounded ml-2mt-4">Showing Results for 100 repos per page.</h3></div>
+    <div ><h3 class="bg-blue-500 text-white text-center px-4 py-2 rounded ml-2mt-4">{{repos.length}} Repos found</h3></div>
   
     <!-- Repository List Section -->
     <div class="bg-gray-100 p-4 rounded">
@@ -26,7 +29,12 @@
           <!-- <h2>{{ repo.owner.login }}</h2> -->
           <a href="{{ repo.html_url }}" target="_blank" class="text-blue-500 hover:underline">{{ repo.name }}</a>
           <p>Description: {{ repo.description }}</p>
-          <p class="text-sm text-gray-500">Languages: {{ repo.language }}</p>
+          <p class="text-sm mb-2 text-gray-500">Languages: {{ repo.language }}</p>
+          <span class="flex flex-wrap">
+            <div *ngFor="let topic of repo.topics" class="mr-2 mb-2">
+              <div class="bg-blue-500 text-white px-2 py-1 rounded text-sm">{{ topic }}</div>
+            </div>
+          </span>
         </li>
       </ul>
     </div>
@@ -54,7 +62,9 @@
   </div>
   <div class="mt-4" *ngIf="totalPages > 0">
     <label for="itemsPerPageInput">Items per Page:  </label>
-    <input id="itemsPerPageInput" type="number" [(ngModel)]="itemsPerPage" min="1" max="100" class="border-spacing-5" />
+    <input id="itemsPerPageInput" type="number" [(ngModel)]="itemsPerPage" min="1" max="100" maxlength="3" class="border-spacing-5" />
+
+
     <button (click)="onItemsPerPageChange()" class="bg-blue-500 text-white px-4 py-2 rounded align-middle">OK</button>
   </div>
 </ng-template>
